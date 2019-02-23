@@ -10,6 +10,7 @@ int distance(void *a, void *b)
 	return a - b;
 }
 
+#define PRINT_FIELD_LOC(s, f) printf("%d\t%s\n", distance((void*) &s.f, (void*) &s), #f)
 int main(void)
 {
 	struct mystruct m;
