@@ -1,9 +1,5 @@
 #include <stdio.h>
 
-struct mystruct {
-	char *first;
-	char *second;
-}__attribute__((no_randomize_layout)) __attribute__((randomize_layout));
 
 int distance(void *a, void *b)
 {
@@ -11,6 +7,11 @@ int distance(void *a, void *b)
 }
 
 #define PRINT_FIELD_LOC(s, f) printf("%d\t%s\n", distance((void*) &s.f, (void*) &s), #f)
+struct mystruct {
+	char *first;
+	char *second;
+	char *third;
+}__attribute__((no_randomize_layout)) __attribute__((randomize_layout));
 int main(void)
 {
 	struct mystruct m;
