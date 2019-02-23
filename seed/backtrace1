@@ -1,0 +1,195 @@
+Breakpoint 1 at 0x78e2ec5: file /home/cantrel2/llvm-project/seedarg/clang/lib/AST/RecordFieldReorganizer.cpp, line 103.
+Breakpoint 2 at 0x78e310b: file /home/cantrel2/llvm-project/seedarg/clang/lib/AST/RecordFieldReorganizer.cpp, line 152.
+Breakpoint 3 at 0x78e3206: file /home/cantrel2/llvm-project/seedarg/clang/lib/AST/RecordFieldReorganizer.cpp, line 159.
+Breakpoint 4 at 0x4425199: file /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp, line 4413.
+Starting program: /home/cantrel2/llvm-project/seedarg/build/bin/clang poc.c -g -frandstruct-seed=hello -o poc7
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 4, clang::driver::tools::Clang::ConstructJob (this=0xbca7030, 
+    C=..., JA=..., Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4413
+4413	  if (Arg *A = Args.getLastArg(options::OPT_frandstruct_seed_EQ)) {
+#0  clang::driver::tools::Clang::ConstructJob (this=0xbca7030, C=..., JA=..., 
+    Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4413
+#1  0x00000000043d027e in clang::driver::Driver::BuildJobsForActionNoCache (
+    this=0x7fffffffcec8, C=..., A=0xbca82f0, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=false, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:4160
+#2  0x00000000043ce7ff in clang::driver::Driver::BuildJobsForAction (
+    this=0x7fffffffcec8, C=..., A=0xbca82f0, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=false, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3897
+#3  0x00000000043cf354 in clang::driver::Driver::BuildJobsForActionNoCache (
+    this=0x7fffffffcec8, C=..., A=0xbca8350, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=true, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:4035
+#4  0x00000000043ce7ff in clang::driver::Driver::BuildJobsForAction (
+    this=0x7fffffffcec8, C=..., A=0xbca8350, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=true, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3897
+#5  0x00000000043c850e in clang::driver::Driver::BuildJobs (
+    this=0x7fffffffcec8, C=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3509
+#6  0x00000000043c43f8 in clang::driver::Driver::BuildCompilation (
+    this=0x7fffffffcec8, ArgList=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:1119
+#7  0x0000000001296f1d in main (argc_=6, argv_=0x7fffffffe5c8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:457
+No symbol "RandstructSeed" in current context.
+4408	    unsigned N = llvm::sys::Process::StandardErrColumns();
+4409	    CmdArgs.push_back(Args.MakeArgString(Twine(N)));
+4410	  }
+4411	
+4412	  // -frandstruct-seed
+4413	  if (Arg *A = Args.getLastArg(options::OPT_frandstruct_seed_EQ)) {
+4414	    //CmdArgs.push_back(A->getValue());
+4415	    llvm::errs() << "handling switch; " << RandstructSeed << " at " << &RandstructSeed << " : " << RandstructSeed.size() << "\n";
+4416	    RandstructSeed.assign(A->getValue(0));
+4417	    strcpy(cstr,A->getValue(0));
+type = char [128]
+4415	    llvm::errs() << "handling switch; " << RandstructSeed << " at " << &RandstructSeed << " : " << RandstructSeed.size() << "\n";
+4416	    RandstructSeed.assign(A->getValue(0));
+No symbol "RandstructSeed" in current context.
+No symbol "RandstructSeed" in current context.
+$1 = '\000' <repeats 127 times>
+$2 = 0x7fffffffe839 "hello"
+$3 = 0 '\000'
+#0  clang::driver::tools::Clang::ConstructJob (this=0xbca7030, C=..., JA=..., 
+    Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4416
+4416	    RandstructSeed.assign(A->getValue(0));
+4411	
+4412	  // -frandstruct-seed
+4413	  if (Arg *A = Args.getLastArg(options::OPT_frandstruct_seed_EQ)) {
+4414	    //CmdArgs.push_back(A->getValue());
+4415	    llvm::errs() << "handling switch; " << RandstructSeed << " at " << &RandstructSeed << " : " << RandstructSeed.size() << "\n";
+4416	    RandstructSeed.assign(A->getValue(0));
+4417	    strcpy(cstr,A->getValue(0));
+4418	    llvm::errs() << "cstr: " << std::string(cstr) << "\n";
+4419	    llvm::errs() << "handling switch; " << RandstructSeed << " at " << &RandstructSeed << " : " << RandstructSeed.size() << "\n";
+4420	  }
+4417	    strcpy(cstr,A->getValue(0));
+4418	    llvm::errs() << "cstr: " << std::string(cstr) << "\n";
+$4 = "hello", '\000' <repeats 122 times>
+#0  clang::driver::tools::Clang::ConstructJob (this=0xbca7030, C=..., JA=..., 
+    Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4418
+4418	    llvm::errs() << "cstr: " << std::string(cstr) << "\n";
+#0  clang::driver::tools::Clang::ConstructJob (this=0xbca7030, C=..., JA=..., 
+    Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4418
+#1  0x00000000043d027e in clang::driver::Driver::BuildJobsForActionNoCache (
+    this=0x7fffffffcec8, C=..., A=0xbca82f0, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=false, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:4160
+#2  0x00000000043ce7ff in clang::driver::Driver::BuildJobsForAction (
+    this=0x7fffffffcec8, C=..., A=0xbca82f0, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=false, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3897
+#3  0x00000000043cf354 in clang::driver::Driver::BuildJobsForActionNoCache (
+    this=0x7fffffffcec8, C=..., A=0xbca8350, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=true, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:4035
+#4  0x00000000043ce7ff in clang::driver::Driver::BuildJobsForAction (
+    this=0x7fffffffcec8, C=..., A=0xbca8350, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=true, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3897
+#5  0x00000000043c850e in clang::driver::Driver::BuildJobs (
+    this=0x7fffffffcec8, C=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3509
+#6  0x00000000043c43f8 in clang::driver::Driver::BuildCompilation (
+    this=0x7fffffffcec8, ArgList=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:1119
+#7  0x0000000001296f1d in main (argc_=6, argv_=0x7fffffffe5c8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:457
+#7  0x0000000001296f1d in main (argc_=6, argv_=0x7fffffffe5c8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:457
+457	  std::unique_ptr<Compilation> C(TheDriver.BuildCompilation(argv));
+452	
+453	  insertTargetAndModeArgs(TargetAndMode, argv, SavedStrings);
+454	
+455	  SetBackdoorDriverOutputsFromEnvVars(TheDriver);
+456	
+457	  std::unique_ptr<Compilation> C(TheDriver.BuildCompilation(argv));
+458	  int Res = 1;
+459	  if (C && !C->containsError()) {
+460	    SmallVector<std::pair<int, const Command *>, 4> FailingCommands;
+461	    Res = TheDriver.ExecuteCompilation(*C, FailingCommands);
+4419	    llvm::errs() << "handling switch; " << RandstructSeed << " at " << &RandstructSeed << " : " << RandstructSeed.size() << "\n";
+#0  clang::driver::tools::Clang::ConstructJob (this=0xbca7030, C=..., JA=..., 
+    Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4419
+4419	    llvm::errs() << "handling switch; " << RandstructSeed << " at " << &RandstructSeed << " : " << RandstructSeed.size() << "\n";
+#0  clang::driver::tools::Clang::ConstructJob (this=0xbca7030, C=..., JA=..., 
+    Output=..., Inputs=..., Args=..., LinkingOutput=0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/ToolChains/Clang.cpp:4419
+#1  0x00000000043d027e in clang::driver::Driver::BuildJobsForActionNoCache (
+    this=0x7fffffffcec8, C=..., A=0xbca82f0, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=false, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:4160
+#2  0x00000000043ce7ff in clang::driver::Driver::BuildJobsForAction (
+    this=0x7fffffffcec8, C=..., A=0xbca82f0, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=false, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3897
+#3  0x00000000043cf354 in clang::driver::Driver::BuildJobsForActionNoCache (
+    this=0x7fffffffcec8, C=..., A=0xbca8350, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=true, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:4035
+#4  0x00000000043ce7ff in clang::driver::Driver::BuildJobsForAction (
+    this=0x7fffffffcec8, C=..., A=0xbca8350, TC=0xbca63c0, BoundArch=..., 
+    AtTopLevel=true, MultipleArchs=false, LinkingOutput=0x0, 
+    CachedResults=std::map with 1 elements = {...}, 
+    TargetDeviceOffloadKind=clang::driver::Action::OFK_None)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3897
+#5  0x00000000043c850e in clang::driver::Driver::BuildJobs (
+    this=0x7fffffffcec8, C=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:3509
+#6  0x00000000043c43f8 in clang::driver::Driver::BuildCompilation (
+    this=0x7fffffffcec8, ArgList=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:1119
+#7  0x0000000001296f1d in main (argc_=6, argv_=0x7fffffffe5c8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:457
+#7  0x0000000001296f1d in main (argc_=6, argv_=0x7fffffffe5c8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:457
+457	  std::unique_ptr<Compilation> C(TheDriver.BuildCompilation(argv));
+452	
+453	  insertTargetAndModeArgs(TargetAndMode, argv, SavedStrings);
+454	
+455	  SetBackdoorDriverOutputsFromEnvVars(TheDriver);
+456	
+457	  std::unique_ptr<Compilation> C(TheDriver.BuildCompilation(argv));
+458	  int Res = 1;
+459	  if (C && !C->containsError()) {
+460	    SmallVector<std::pair<int, const Command *>, 4> FailingCommands;
+461	    Res = TheDriver.ExecuteCompilation(*C, FailingCommands);
+main (argc_=6, argv_=0x7fffffffe5c8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:458
+458	  int Res = 1;
+459	  if (C && !C->containsError()) {
+460	    SmallVector<std::pair<int, const Command *>, 4> FailingCommands;
+461	    Res = TheDriver.ExecuteCompilation(*C, FailingCommands);
+464	    if (TheDriver.GenReproducer) {

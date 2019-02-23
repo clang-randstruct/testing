@@ -1,0 +1,18 @@
+set follow-fork-mode child
+set print pretty on
+break RecordFieldReorganizer.cpp:103
+break RecordFieldReorganizer.cpp:152
+break RecordFieldReorganizer.cpp:159
+break CompilerInvocation.cpp:1673
+break Clang.cpp:4413
+break RecordLayoutBuilder.cpp:2993
+break Program.cpp:37
+break Job.cpp:341
+break Compilation.cpp:184
+break Compilation.cpp:235
+break Driver.cpp:1448
+break driver.cpp:461
+catch exec
+catch fork
+catch vfork
+run

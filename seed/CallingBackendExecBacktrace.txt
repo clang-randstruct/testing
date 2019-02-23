@@ -1,0 +1,33 @@
+#0  clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:80
+#1  0x00007ffff6a245dd in __spawnix (pid=0x7fffffffbdac, 
+    file=0xbca7070 "/home/cantrel2/llvm-project/seedarg/build/bin/clang-9", 
+    file_actions=0x0, attrp=<optimized out>, argv=0xbcd1e50, 
+    envp=0x7fffffffe600, xflags=0, exec=0x7ffff6a02640 <execve>)
+    at ../sysdeps/unix/sysv/linux/spawni.c:369
+#2  0x00007ffff6a24dcb in __spawni (pid=<optimized out>, file=<optimized out>, 
+    acts=<optimized out>, attrp=<optimized out>, argv=<optimized out>, 
+    envp=<optimized out>, xflags=0) at ../sysdeps/unix/sysv/linux/spawni.c:406
+#3  0x00007ffff6a243eb in __posix_spawn (pid=<optimized out>, 
+    path=<optimized out>, file_actions=<optimized out>, attrp=<optimized out>, 
+    argv=<optimized out>, envp=<optimized out>) at spawn.c:30
+#4  0x0000000003aa5e3f in Execute (PI=..., Program=..., Args=..., Env=..., 
+    Redirects=..., MemoryLimit=0, ErrMsg=0x7fffffffca58)
+    at /home/cantrel2/llvm-project/seedarg/llvm/lib/Support/Unix/Program.inc:251
+#5  0x0000000003aa5647 in llvm::sys::ExecuteAndWait (Program=..., Args=..., 
+    Env=..., Redirects=..., SecondsToWait=0, MemoryLimit=0, 
+    ErrMsg=0x7fffffffca58, ExecutionFailed=0x7fffffffca57)
+    at /home/cantrel2/llvm-project/seedarg/llvm/lib/Support/Program.cpp:37
+#6  0x00000000043fe82c in clang::driver::Command::Execute (this=0xbcd0bf0, 
+    Redirects=..., ErrMsg=0x7fffffffca58, ExecutionFailed=0x7fffffffca57)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Job.cpp:341
+#7  0x00000000043b5611 in clang::driver::Compilation::ExecuteCommand (
+    this=0xbca7910, C=..., FailingCommand=@0x7fffffffcb40: 0x0)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Compilation.cpp:184
+#8  0x00000000043b57bb in clang::driver::Compilation::ExecuteJobs (
+    this=0xbca7910, Jobs=..., FailingCommands=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Compilation.cpp:235
+#9  0x00000000043cb016 in clang::driver::Driver::ExecuteCompilation (
+    this=0x7fffffffced8, C=..., FailingCommands=...)
+    at /home/cantrel2/llvm-project/seedarg/clang/lib/Driver/Driver.cpp:1448
+#10 0x0000000001296f9c in main (argc_=4, argv_=0x7fffffffe5d8)
+    at /home/cantrel2/llvm-project/seedarg/clang/tools/driver/driver.cpp:461
