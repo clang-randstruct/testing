@@ -28,6 +28,12 @@ int main(void)
 	struct mystruct m;
 	m.first = "I'm the first!";
 	m.second = "and I'm the second!";
+	m.second = "third!!!";
+
+	PRINT_FIELD_LOC(m, first);
+	PRINT_FIELD_LOC(m, second);
+	PRINT_FIELD_LOC(m, third);
+
 	struct perf p;
 
 	p.a = 0;
