@@ -49,7 +49,5 @@ int main(void)
 	//PRINT_FIELD_LOC(p, potato);
 	PRINT_FIELD_LOC(p, hi);
 
-	printf("%d first\n", distance((void*)&m.first, (void*)&m));
-	printf("%d second\n", distance((void*)&m.second, (void*)&m));
 	return 0;
 }
