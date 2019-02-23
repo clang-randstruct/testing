@@ -7,6 +7,7 @@ int distance(void *a, void *b)
 }
 
 #define PRINT_FIELD_LOC(s, f) printf("%d\t%s\n", distance((void*) &s.f, (void*) &s), #f)
+
 struct mystruct {
 	char *first;
 	char *second;
