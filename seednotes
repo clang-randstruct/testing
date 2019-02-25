@@ -1,4 +1,4 @@
-Program.cpp:37 is the first location that doesn't see cstr
+Program.cpp:37 is the first location that doesn't see cstr (undefined)
 CompilerInvocation.cpp:1679 is next relevant location
 
 gdb: set logging on
@@ -9,12 +9,54 @@ Program.cpp:37 Execute() takes Args - where are they defined?
 Job.cpp:341
     auto Args = llvm::toStringRefArray(Argv.data());
 
+class Compilation
+  Driver TheDriver
+  ToolChain DefaultToolchain
+  InputArgList
+  DerivedArgList
+  Action[] AllActions
+  JobList Jobs
+  
+
 class Command.Arguments
+
+Args.getNumInputArgsStrings() 
+Args.getArgString(i)
+Args.print(llvm::errs())
+
+First show 50 items, then 48 items (erase is working?)
+driver.cpp:381 calls linker and fails; what is argv?
+
+Driver.cpp:1451 # point before failed linker call
+finish
+linker error
+driver.cpp:461 # after failed link?
+Driver.cpp:1495 # emit linker error (this is after linker was called)
+problemt is that Driver.cpp:1489 FailingCommand->getCreator().hasGoodDiagnostics() is false
+getCreator() returns a clang::driver::Tool
+Two jobs - how to distinguish which one to add argument for?
+Within ExecuteJobs, Job.getCreator() shows Name="clang" (for the frontend)
+
+clang.cpp 5359 not seeding args
 
 ## Frame 7
 Compilation::ExecuteCommand(Command C, Command FailingCommand)
+Called from Compilation:235 , Command is Job. Where are Jobs defined?
+C.getJobs(), where are C's jobs filled in?
+  Driver::BuildCompilation -> Driver::BuildJobs
+  Driver::BuildJobs() { C.getArgs() } gives seed switch
+  Driver::BuildJobsForAction(Compilation, Action, ToolChain, StringRef)
 
-Story
----------
-driver.cpp:457 Compilation( TheDriver.BuildCompilation(argv) )
-driver.cpp:461 TheDriver.ExecuteCompilation(Compilation *C, FailingCommands)
+Sub-stories:
+------------
+Driver::BuildCompilation(ArgList) in Driver.cpp:
+
+Driver::ExecuteCompilation( Compilation C, SmallVector FaillingCommands) in Driver.cpp:
+Driver.cpp:1448 C.ExecuteJobs( C.getJobs(), FailingCommands )
+
+## To-Do
+Mark beginning and end of clang and linker jobs.
+Check if Clang::ConstructJobs is called for linker.
+Check if post-fork argument parsing code is called for linker.
+Check if pre-fork argument setup is correct
+  Check at Compilation.cpp:225 Compilation::ExecuteJobs()

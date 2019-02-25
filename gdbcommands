@@ -1,18 +1,86 @@
 set follow-fork-mode child
 set print pretty on
+
+# To-Do:
+# problem in child process, giving error 'unknonw argument -frandstruct'
+
+# pre-fork
+#break Clang::ConstructJob 
+#note - we should only see this handling frandstruct-seed once
+# - perhaps marking it claimed?
+# - check if ConstructJob is called by linker
+#break Clang.cpp:3370
+
+# where frandstruct-seed option is handled for clang frontend
+# clang::ConstructJob
+break Clang.cpp:4412
+#break Job.cpp:341
+#break addCommand
+#break Clang.cpp:5380
+
+# frandstruct usually argument #40
+
+# Command constructor - see what arguments are being given
+# Clang.cpp:5380 is call to Command constructor
+#break Job.cpp:43
+
+# Check which job/command is running (clang or linker)
+#break Compilation.cpp:234
+#p Job.Creator.Name
+# At this point, Job.Arguments should contain seed
+# p Job.Arguments.size()
+# p Job.Arguments[40]
+# p Job.Arguments[41]
+
+# //##### missing arg
+# //need: stacktrace at Clang.cpp:5380 and Compilation.cpp:234
+
+#break Compilation.cpp:232
+#
+
+# forking
+#catch exec
+#catch fork
+#catch vfork
+
+# post-fork
+
+# main()
+break driver.cpp:321
+# in main(), calling ExecuteCC1Tool
+# -frandstruct is arg #41
+# p argv[41]
+break driver.cpp:381
+
+# ExecuteCC1Tool()
+#break driver.cpp:309
+
+# cc1_main()
+#break cc1_main.cpp:194
+
+# at this point
+# Args.getLastArg(OPT_frandstruct_seed) is failing!
+break CompilerInvocation.cpp:1673
+break CompilerInvocation.cpp:3275
+
 break RecordFieldReorganizer.cpp:103
 break RecordFieldReorganizer.cpp:152
 break RecordFieldReorganizer.cpp:159
-break CompilerInvocation.cpp:1673
-break Clang.cpp:4413
-break RecordLayoutBuilder.cpp:2993
-break Program.cpp:37
-break Job.cpp:341
-break Compilation.cpp:184
-break Compilation.cpp:235
-break Driver.cpp:1448
-break driver.cpp:461
-catch exec
-catch fork
-catch vfork
+#break Clang.cpp:4413
+#break RecordLayoutBuilder.cpp:2993
+#break Compilation.cpp:235
+#break Compilation.cpp:184
+#break Program.cpp:37
+# call to C.ExecuteJobs( C.getJobs(), FailingCommands )
+#break Driver.cpp:1448
+# call to ParseArgStrings( ArgList.slice(1), IsCLMode(), ContainsError())
+# break Driver.cpp:953
+# call to TheDriver.ExecuteCompilation(*C, FailingCommands)
+#break driver.cpp:461
+# define Driver::BuildJobs(Compilation &C)
+#break Driver.cpp:3466
+# Constructor of command (who is calling? with what args?)
+#break Job.cpp:36
+# read from global into a command line arg for backend
+# loop through jobs, executing them
 run

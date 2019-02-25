@@ -1,4 +1,4 @@
-RANDSTRUCT := $(HOME)/llvm-project/build/bin/clang
+RANDSTRUCT := $(HOME)/projects/llvm-project/seedarg/build/bin/clang
 REGULAR    := /usr/bin/clang
 
 all: reg rand
@@ -12,7 +12,7 @@ rand: poc.c
 	@pahole $@ >> $@.layout
 
 noseed1: poc.c
-  $(RANDSTRUCT) $^ -o $@
+	$(RANDSTRUCT) $^ -o $@
 
 .PHONY: clean
 clean: 
