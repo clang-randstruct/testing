@@ -1,0 +1,68 @@
+struct mystruct {
+	char *                     second;               /*     0     8 */
+	char *                     third;                /*     8     8 */
+	char *                     first;                /*    16     8 */
+
+	/* size: 24, cachelines: 1, members: 3 */
+	/* last cacheline: 24 bytes */
+};
+struct allFunctionPointers {
+	int                        (*allFunctionPointersFieldOne)(void); /*     0     8 */
+	int                        (*allFunctionPointersFieldTwo)(void); /*     8     8 */
+
+	/* size: 16, cachelines: 1, members: 2 */
+	/* last cacheline: 16 bytes */
+};
+struct notautoselect {
+	int                        (*test1)(void);       /*     0     8 */
+	int                        (*test2)(void);       /*     8     8 */
+
+	/* size: 16, cachelines: 1, members: 2 */
+	/* last cacheline: 16 bytes */
+};
+struct notAllFunctionPointers {
+	int                        (*notAllFunctionPointersFieldOne)(void); /*     0     8 */
+	int                        notAllFunctionPointersFieldTwo; /*     8     4 */
+
+	/* size: 16, cachelines: 1, members: 2 */
+	/* padding: 4 */
+	/* last cacheline: 16 bytes */
+};
+struct perf {
+	char                       b;                    /*     0     1 */
+
+	/* XXX 3 bytes hole, try to pack */
+
+	int                        a;                    /*     4     4 */
+	int                        c[0];                 /*     8     0 */
+
+	/* XXX 24 bytes hole, try to pack */
+
+	int                        (*hi)(void);          /*    32     8 */
+	unsigned int               potato:1;             /*    40:31  4 */
+
+	/* XXX 31 bits hole, try to pack */
+	/* XXX 4 bytes hole, try to pack */
+
+	struct mystruct            m;                    /*    48    24 */
+	/* --- cacheline 1 boundary (64 bytes) was 8 bytes ago --- */
+
+	/* size: 72, cachelines: 2, members: 6 */
+	/* sum members: 41, holes: 3, sum holes: 31 */
+	/* bit holes: 1, sum bit holes: 31 bits */
+	/* last cacheline: 8 bytes */
+};
+struct norand {
+	int                        tomato;               /*     0     4 */
+	char                       potato;               /*     4     1 */
+
+	/* XXX 3 bytes hole, try to pack */
+
+	double                     lettuce;              /*     8     8 */
+	int                        computer;             /*    16     4 */
+
+	/* size: 24, cachelines: 1, members: 4 */
+	/* sum members: 17, holes: 1, sum holes: 3 */
+	/* padding: 4 */
+	/* last cacheline: 24 bytes */
+};
