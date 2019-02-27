@@ -1,21 +1,34 @@
 SHELL := /bin/bash
-PROJDIR := $(HOME)/projects/llvm-project/skip-unions
+PROJDIR := $(HOME)/projects/llvm-project/seedarg
 RANDSTRUCT := $(PROJDIR)/build/bin/clang
 REGULAR    := /usr/bin/clang
 
-all: reg rand diff
+all: reg rand0 diff
 
 reg: poc.c
 	$(REGULAR) -g -Wno-format $^ -o $@
 	@pahole $@ >> $@.layout
 
-rand: poc.c
+rand0: poc.c
 	$(RANDSTRUCT) -g -Wno-format $^ -o $@
 	@pahole $@ >> $@.layout
 
-diff: rand reg
-	diff <( pahole ./reg ) <( pahole ./rand ) | tee diffout
+rand1: poc.c
+	$(RANDSTRUCT) -randstruct-seed=generalkenobi -g -Wno-format $^ -o $@
+	@pahole $@ >> $@.layout
+
+rand2: poc.c
+	$(RANDSTRUCT) -randstruct-seed=hellothere -g -Wno-format $^ -o $@
+	@pahole $@ >> $@.layout
+
+diff: reg rand0 rand1 rand2
+	diff <( pahole ./reg ) <( pahole ./rand0 ) | tee diffout
+	diff <( pahole ./reg ) <( pahole ./rand1 ) | tee diffout
+	diff <( pahole ./reg ) <( pahole ./rand2 ) | tee diffout
+	diff <( pahole ./rand0 ) <( pahole ./rand1 ) | tee diffout
+	diff <( pahole ./rand0 ) <( pahole ./rand2 ) | tee diffout
+	diff <( pahole ./rand1 ) <( pahole ./rand2 ) | tee diffout
 
 .PHONY: clean
 clean: 
-	@rm -f reg rand rand.layout reg.layout
+	@rm -f reg rand{,0,1,2} rand{,0,1,2}.layout reg.layout

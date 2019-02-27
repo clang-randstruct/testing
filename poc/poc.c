@@ -30,6 +30,13 @@ struct perf {
 	int (* hi)();
 }__attribute__((randomize_layout));
 
+union randomunion
+{
+  int a;
+  char b;
+  float c;
+}__attribute__((randomize_layout));
+
 int main(void)
 {
 	struct mystruct m;
@@ -62,6 +69,11 @@ int main(void)
 	PRINT_FIELD_LOC(r, potato);
 	PRINT_FIELD_LOC(r, lettuce);
 	PRINT_FIELD_LOC(r, computer);
+
+  union randomunion u = {0xDEADBEEF};
+	PRINT_FIELD_LOC(u, a);
+	PRINT_FIELD_LOC(u, b);
+	PRINT_FIELD_LOC(u, c);
 
 	return 0;
 }
