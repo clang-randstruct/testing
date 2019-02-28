@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PROJDIR := $(HOME)/projects/llvm-project/seedarg
+PROJDIR := $(HOME)/projects/llvm-project/Autoselect
 RANDSTRUCT := $(PROJDIR)/build/bin/clang
 REGULAR    := /usr/bin/clang
 
@@ -20,6 +20,10 @@ rand1: poc.c
 rand2: poc.c
 	$(RANDSTRUCT) -randstruct-seed=hellothere -g -Wno-format $^ -o $@
 	@pahole $@ >> $@.layout
+
+auto: poc.c
+	$(RANDSTRUCT) -randstruct-auto poc.c -o auto
+	@pahol $@ >> $@.layout
 
 diff: reg rand0 rand1 rand2
 	diff <( pahole ./reg ) <( pahole ./rand0 ) | tee diffout
