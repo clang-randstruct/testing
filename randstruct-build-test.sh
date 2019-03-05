@@ -3,7 +3,7 @@
 BUILDIR=~/projects/llvm-project/develop/build
 CLEAN=1 # set if you want to make clean in between each build
 QUITONFAIL=0 # quit if a build fails, or continue to the next one?
-CORES=24
+CORES=4
 BRANCH=rfcv1
 hashes=(
 57b2e55
@@ -31,14 +31,14 @@ do
   git branch | grep \*
   if [ "$CLEAN" -ne "0" ];
   then
+    echo "Cleaning"
     make clean
+    echo "Done cleaning"
   fi
-  #make -j "$CORES" >/tmp/makeout 2>/tmp/makerrs
-  make -j "$CORES"
-  #longjob make -j "$CORES"
+  echo "Making $i"
+  make -j "$CORES" >/tmp/test_out_"$i" 2>/tmp/test_err_"$i"
   EXIT="$?"
-  #echo "$?" >>/tmp/makelog
-  echo "$?"
+  echo "Done making $i"
   if [ "$EXIT" -eq "0" ];
   then
     echo "Randstruct test: Build of $i passed"
