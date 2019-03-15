@@ -25,6 +25,9 @@ struct perf {
 	int a;
 	char b;
 	int c[6];
+	int d;
+	int e;
+	int f;
 	struct mystruct m;
 	unsigned potato : 1;
 	int (* hi)();
@@ -45,6 +48,9 @@ int main(void)
 
 	p.a = 0;
 	p.b = 'a';
+	p.d = 7;
+	p.e = 11;
+	p.f = 13;
 	p.m = m;
 	p.potato = 0;
 	p.hi = NULL;
@@ -52,6 +58,9 @@ int main(void)
 	PRINT_FIELD_LOC(p, a);
 	PRINT_FIELD_LOC(p, b);
 	PRINT_FIELD_LOC(p, c);
+	PRINT_FIELD_LOC(p, d);
+	PRINT_FIELD_LOC(p, e);
+	PRINT_FIELD_LOC(p, f);
 	PRINT_FIELD_LOC(p, m);
 	//PRINT_FIELD_LOC(p, potato);
 	PRINT_FIELD_LOC(p, hi);
